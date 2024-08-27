@@ -9,6 +9,9 @@ import ShoppingCart from './components/ShoppingCart';
 import Login from './components/Login';
 import NotFound from './pages/NotFound';
 
+// Import global styles
+import './App.css';
+
 function App() {
   return (
     <Router>

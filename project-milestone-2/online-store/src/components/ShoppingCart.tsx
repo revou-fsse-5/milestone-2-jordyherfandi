@@ -2,19 +2,22 @@
 import React, { useState } from 'react';
 
 const ShoppingCart = () => {
-  // Removed setCart since it's not being used
   const [cart] = useState<any[]>([]);
 
   return (
-    <div>
+    <div className="container">
       <h2>Shopping Cart</h2>
-      <ul>
-        {cart.map((item, index) => (
-          <li key={index}>
-            {item.title} - ${item.price}
-          </li>
-        ))}
-      </ul>
+      {cart.length === 0 ? (
+        <p>Your cart is empty</p>
+      ) : (
+        <ul>
+          {cart.map((item, index) => (
+            <li key={index}>
+              {item.title} - ${item.price}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

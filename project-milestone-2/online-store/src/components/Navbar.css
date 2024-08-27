@@ -1,0 +1,14 @@
+/* src/components/Navbar.css */
+
+nav {
+    background-color: #333;
+  }
+  
+  nav ul li a {
+    color: white;
+  }
+  
+  nav ul li a:hover {
+    color: lightgray;
+  }
+  

@@ -17,15 +17,20 @@ const ProductList = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Product List</h2>
-      <ul>
+    <div className="container">
+      <h2>Products</h2>
+      <div className="product-grid">
         {products.map(product => (
-          <li key={product.id}>
-            <Link to={`/product/${product.id}`}>{product.title}</Link>
-          </li>
+          <div key={product.id} className="card">
+            <Link to={`/product/${product.id}`}>
+              <img src={product.images[0]} alt={product.title} />
+              <h3>{product.title}</h3>
+              <p>${product.price}</p>
+            </Link>
+            <button>Add to Cart</button>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
