@@ -1,48 +1,48 @@
-// src/components/Login.tsx
+// src/components/Register.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, Link } from 'react-router-dom';
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError('');
     setSuccess('');
 
-    if (username === '' || password === '') {
-      setError('Username and password are required.');
+    if (username === '' || password === '' || confirmPassword === '') {
+      setError('All fields are required.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
       return;
     }
 
     try {
-      const response = await axios.post('https://fakestoreapi.com/auth/login', {
+      // Make the request without storing the response since it's not being used
+      await axios.post('https://fakestoreapi.com/users', {
         username,
         password,
       });
 
-      const token = response.data.token;
-      localStorage.setItem('token', token);
-      localStorage.setItem('username', username);  // Ensure this is set correctly
-
-      setSuccess('Login Successful! Redirecting...');
-
+      setSuccess('Registration Successful! Redirecting to login...');
       setTimeout(() => {
-        navigate('/');
+        window.location.href = '/login';
       }, 2000);
     } catch (error) {
-      setError('Login failed. Please check your username and password.');
+      setError('Registration failed. Please try again.');
     }
   };
 
   return (
     <div className="container">
-      <h2>Login</h2>
+      <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -58,13 +58,19 @@ const Login = () => {
           placeholder="Password"
           required
         />
+        <input
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          placeholder="Confirm Password"
+          required
+        />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         {success && <p style={{ color: 'green' }}>{success}</p>}
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
-      <p>Don't have an account? <Link to="/register">Register</Link></p>
     </div>
   );
 };
 
-export default Login;
+export default Register;

@@ -5,16 +5,37 @@ import { Link } from 'react-router-dom';
 
 const ProductList = () => {
   const [products, setProducts] = useState<any[]>([]);
+  const [cart, setCart] = useState<any[]>([]);
+  const [successMessage, setSuccessMessage] = useState<{ id: number; message: string } | null>(null);
 
   useEffect(() => {
-    axios.get('https://api.escuelajs.co/api/v1/products')
+    // Fetch products from the API
+    axios.get('https://fakestoreapi.com/products')
       .then(response => {
         setProducts(response.data);
       })
       .catch(error => {
         console.error('Error fetching products:', error);
       });
+
+    // Load the cart from localStorage when the component mounts
+    const storedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+    setCart(storedCart);
   }, []);
+
+  const addToCart = (product: any) => {
+    const updatedCart = [...cart, product];
+    setCart(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+
+    // Show success message
+    setSuccessMessage({ id: product.id, message: 'Added to cart' });
+
+    // Remove the message after 2 seconds
+    setTimeout(() => {
+      setSuccessMessage(null);
+    }, 2000);
+  };
 
   return (
     <div className="container">
@@ -23,11 +44,14 @@ const ProductList = () => {
         {products.map(product => (
           <div key={product.id} className="card">
             <Link to={`/product/${product.id}`}>
-              <img src={product.images[0]} alt={product.title} />
+              <img src={product.image} alt={product.title} />
               <h3>{product.title}</h3>
               <p>${product.price}</p>
             </Link>
-            <button>Add to Cart</button>
+            <button onClick={() => addToCart(product)}>Add to Cart</button>
+            {successMessage && successMessage.id === product.id && (
+              <p style={{ color: 'green' }}>{successMessage.message}</p>
+            )}
           </div>
         ))}
       </div>
