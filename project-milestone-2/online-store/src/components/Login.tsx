@@ -1,4 +1,3 @@
-// src/components/Login.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
@@ -28,7 +27,7 @@ const Login = () => {
 
       const token = response.data.token;
       localStorage.setItem('token', token);
-      localStorage.setItem('username', username);  // Ensure this is set correctly
+      localStorage.setItem('username', username);
 
       setSuccess('Login Successful! Redirecting...');
 
@@ -41,14 +40,15 @@ const Login = () => {
   };
 
   return (
-    <div className="container">
-      <h2>Login</h2>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-bold mb-6">Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           placeholder="Username"
+          className="mb-4 w-full p-2 border border-gray-300 rounded-md"
           required
         />
         <input
@@ -56,13 +56,16 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          className="mb-4 w-full p-2 border border-gray-300 rounded-md"
           required
         />
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
-        <button type="submit">Login</button>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {success && <p className="text-green-500 mb-4">{success}</p>}
+        <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Login
+        </button>
       </form>
-      <p>Don't have an account? <Link to="/register">Register</Link></p>
+      <p className="mt-4">Don't have an account? <Link to="/register" className="text-blue-500 hover:text-blue-700">Register</Link></p>
     </div>
   );
 };

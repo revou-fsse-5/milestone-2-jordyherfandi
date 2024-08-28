@@ -1,4 +1,3 @@
-// src/components/ShoppingCart.tsx
 import React, { useState, useEffect } from 'react';
 
 const ShoppingCart = () => {
@@ -17,16 +16,21 @@ const ShoppingCart = () => {
   };
 
   return (
-    <div className="container">
-      <h2>Shopping Cart</h2>
+    <div className="container mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-6">Shopping Cart</h2>
       {cart.length === 0 ? (
-        <p>Your cart is empty</p>
+        <p className="text-gray-500">Your cart is empty</p>
       ) : (
-        <ul>
+        <ul className="space-y-4">
           {cart.map((item, index) => (
-            <li key={index}>
-              {item.title} - ${item.price}
-              <button onClick={() => handleRemove(index)}>Remove</button>
+            <li key={index} className="flex justify-between items-center bg-white p-4 rounded-lg shadow-md">
+              <div>
+                <p className="text-lg font-bold">{item.title}</p>
+                <p className="text-gray-700">${item.price}</p>
+              </div>
+              <button onClick={() => handleRemove(index)} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Remove
+              </button>
             </li>
           ))}
         </ul>

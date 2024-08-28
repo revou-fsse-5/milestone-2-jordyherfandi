@@ -1,4 +1,3 @@
-// src/pages/CategoryPage.tsx
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -24,21 +23,23 @@ const CategoryPage = () => {
     fetchProductsByCategory();
   }, [category]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <div className="text-center">Loading...</div>;
+  if (error) return <div className="text-center text-red-500">{error}</div>;
 
   return (
-    <div className="container">
-      <h2>Products in {category}</h2>
-      <div className="product-grid">
+    <div className="container mx-auto p-4">
+      <h2 className="text-2xl font-bold mb-4 capitalize">Products in {category}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map(product => (
-          <div key={product.id} className="card">
+          <div key={product.id} className="bg-white rounded-lg shadow-lg p-4">
             <Link to={`/product/${product.id}`}>
-              <img src={product.image} alt={product.title} />
-              <h3>{product.title}</h3>
-              <p>${product.price}</p>
+              <img src={product.image} alt={product.title} className="w-full h-48 object-cover rounded-md" />
+              <h3 className="text-lg font-bold mt-2">{product.title}</h3>
+              <p className="text-gray-700">${product.price}</p>
             </Link>
-            <button>Add to Cart</button>
+            <button className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              Add to Cart
+            </button>
           </div>
         ))}
       </div>

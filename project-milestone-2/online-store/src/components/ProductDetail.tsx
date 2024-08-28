@@ -1,4 +1,3 @@
-// src/components/ProductDetail.tsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -18,17 +17,19 @@ const ProductDetail = () => {
   }, [id]);
 
   if (!product) {
-    return <div>Loading...</div>;
+    return <div className="text-center">Loading...</div>;
   }
 
   return (
-    <div className="container">
-      <div className="card">
-        <img src={product.images[0]} alt={product.title} />
-        <h2>{product.title}</h2>
-        <p>{product.description}</p>
-        <p>Price: ${product.price}</p>
-        <button>Add to Cart</button>
+    <div className="container mx-auto p-6">
+      <div className="bg-white rounded-lg shadow-md p-6">
+        <img src={product.images[0]} alt={product.title} className="w-full h-64 object-cover rounded-md" />
+        <h2 className="text-2xl font-bold mt-4">{product.title}</h2>
+        <p className="mt-4 text-gray-700">{product.description}</p>
+        <p className="mt-2 text-lg font-bold">Price: ${product.price}</p>
+        <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Add to Cart
+        </button>
       </div>
     </div>
   );

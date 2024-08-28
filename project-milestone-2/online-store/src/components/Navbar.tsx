@@ -30,25 +30,35 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/products">Products</Link></li>
-        {categories.map(category => (
-          <li key={category}>
-            <Link to={`/category/${category}`}>{category}</Link>
-          </li>
-        ))}
-        <li><Link to="/cart">Cart</Link></li>
-        {username ? (
-          <>
-            <li style={{ color: 'green', fontWeight: 'bold' }}>{username}</li>
-            <li><button onClick={handleLogout}>Logout</button></li>
-          </>
-        ) : (
-          <li><Link to="/login">Login</Link></li>
-        )}
-      </ul>
+    <nav className="bg-gray-800 p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="flex space-x-4">
+          <Link to="/" className="text-white hover:text-gray-400">Home</Link>
+          <Link to="/products" className="text-white hover:text-gray-400">Products</Link>
+          {categories.map(category => (
+            <Link key={category} to={`/category/${category}`} className="text-white hover:text-gray-400 capitalize">
+              {category}
+            </Link>
+          ))}
+          <Link to="/cart" className="text-white hover:text-gray-400">Cart</Link>
+        </div>
+        <div className="flex space-x-4">
+          {username ? (
+            <>
+              <span className="text-green-400 font-bold">{username}</span>
+              <button 
+                onClick={handleLogout} 
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Logout
+              </button>
+
+            </>
+          ) : (
+            <Link to="/login" className="text-white hover:text-gray-400">Login</Link>
+          )}
+        </div>
+      </div>
     </nav>
   );
 };
